@@ -1,29 +1,21 @@
-name: Node CI
-
+name: Deploy GitHub Pages
 on:
   push:
     branches:
     - master
-
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [10.x]
-
     steps:
     - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
+        node-version: '10.x'
+    - name: yarn install, build
       run: |
         yarn install
         yarn build
-      env:
-        CI: true
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v2
       env:
